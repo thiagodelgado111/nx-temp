@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+  backend:
+    container_name: temp-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: backend
+      args:
+        - PORT=3000
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/temptemp
+    depends_on:
+      - mongo
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+  frontend:
+    container_name: temp-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: frontend
+      args:
+        - PORT=3333
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/app

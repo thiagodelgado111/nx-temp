@@ -12,6 +12,11 @@ export class MessageController {
     return this.messageService.getAll();
   }
 
+  @Get('gnarl')
+  gnarl(): string {
+    return 'gnarl!';
+  }
+
   @Post('leave')
   async create(@Body() leaveMessageDto: LeaveMessageDto) {
     await this.messageService.create(leaveMessageDto);
